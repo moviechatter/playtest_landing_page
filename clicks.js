@@ -384,7 +384,7 @@ function handleHiddenSteps() {
 
 // Blackout function
 function blackout(e) {
-  if (e.ctrlKey === targetKeys.ctrlKey && e.shiftKey === targetKeys.shiftKey && e.key === targetKeys.key) {
+  if ((e.ctrlKey === targetKeys.ctrlKey && e.shiftKey === targetKeys.shiftKey && e.key === targetKeys.key) || e.target.id === "hidden-link") {
     hidden_div.style.opacity = "100%";
     count = 1;
     for (let i = 0; i < allP.length; i++) {
@@ -418,6 +418,8 @@ function blackout(e) {
   }
 }
 document.body.addEventListener('keydown', blackout);
+const hiddenButton = document.getElementById("hidden-link");
+hiddenButton.addEventListener('click', blackout);
 
 function victorySequence() {
   console.log("victory sequence");
@@ -429,3 +431,20 @@ function victorySequence() {
   timedText.textContent = modifiedText;
   nathanSection.scrollIntoView({ behavior: 'smooth' });
 }
+
+// Select all anchor links with the class "smooth-scroll"
+const smoothScrollLinks = document.querySelectorAll('.smooth-scroll');
+
+// Add a click event listener to each smooth-scroll link
+smoothScrollLinks.forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+
+    // Get the target element based on the href attribute of the link
+    const targetId = link.getAttribute('href');
+    const targetElement = document.querySelector(targetId);
+
+    // Scroll smoothly to the target element
+    targetElement.scrollIntoView({ behavior: 'smooth' });
+  });
+});

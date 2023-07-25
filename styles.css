@@ -1,3 +1,7 @@
+#hidden-link {
+
+}
+
 #blackout {
   width: 100%;
   height: 100%;
@@ -175,16 +179,33 @@ body {
 }
 
 #header-right-elements {
+  display: flex;
+  flex-direction: column; /* To make the elements stack vertically */
+  align-items: flex-start; /* Align elements to the left */
   float: right;
-}
-
-#header-right-links a {
-  margin-left: 2vw;
 }
 
 #contact-email {
-  padding-top: 3vh;
-  float: right;
+  display: block; /* To place the email on its own row */
+  margin-bottom: .8vw; /* Add spacing between the email and the links */
+  color: #141134; /* Text color for the email link */
+  margin-left: auto;
+}
+
+#header-right-links a,
+#header-right-links p {
+  display: inline-block; /* To make the elements inline and have a rectangular background */
+  padding: 10px 20px; /* Add padding to create space around the text */
+  background-color: #141134; /* Background color */
+  color: white; /* Text color */
+  border-radius: 10px; /* Rounded corners */
+  text-decoration: none; /* Remove underline from anchor links */
+  margin-right: 10px; /* Add space between elements (optional) */
+}
+
+#header-right-links a:last-child,
+#header-right-links p {
+  margin-right: 0; /* Remove margin-right for the last link and the paragraph */
 }
 
 #hero {
