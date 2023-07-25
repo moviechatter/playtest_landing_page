@@ -3,14 +3,20 @@
 <head>
   <title>Playtest</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway&family=Roboto+Mono">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway&family=Roboto+Mono&family=Press+Start+2P">
   <script type="module" src="clicks.js"></script>
 </head>
 <body>
+  <div id="blackout" class="blackout-item">
+    <img class="blackout-item blackout-chest-component" src="./img/hidden_elements/hidden_drake.png">
+    <img class="blackout-item blackout-chest-component" src="./img/hidden_elements/hidden_step_1.png">
+    <img class="blackout-item blackout-chest-component" src="./img/hidden_elements/hidden_step_2.png">
+    <img class="blackout-item blackout-chest-component" src="./img/hidden_elements/hidden_step_3.png">
+  </div>
   <div id="header">
     <h1 id="playtest-header-text">Playtest</h1>
     <div id="header-right-elements">
-      <p id="contact-email">info@theplaytest.com</p>
+      <a id="contact-email" href="mailto:info@theplaytest.com">info@theplaytest.com</a>
       <div id="header-right-links">
         <a href="https://example.com">About</a>
         <a href="https://example.com">Try It</a>
@@ -27,7 +33,7 @@
     <img src="./img/drake_meme.png" id="drake">
     <p id="drake-caption" class="plain navy">Your readers hate ads.<br><br>Monetize with <span class="red">a</span><span class="orange">r</span><span class="green">t</span>,<br>not interruptions.</p>
   </div>
-  <div class="break-container">
+  <div id="nathan-section" class="break-container">
     <div id="nathan-article-container">
       <img id="nathan-article" src="./img/nathan_chen.png">
       <button id="nathan-button" class="styled-button">CLICK ME</button>
@@ -42,7 +48,7 @@
   </div>
   <div id="steps-section">
     <div id="step-container">
-      <p class="styled-header styled navy">Woah! How'd you do that??<br><br>Simple. 3 Steps:</p>
+      <p id="surprise" class="styled-header styled navy">Woah! How'd you do that??<br><br>Simple. 3 Steps:</p>
       <div id="step-description-row">
         <img id="step-number" class="step-number" src=./img/1.png>
         <p id="step-description-text" class="plain navy">We analyze your website’s content, tag each element, & find the best spots to place newly generated brand graphics.</p>
@@ -53,7 +59,7 @@
   </div>
   <div id="pricing-section" class="break-container">
     <div id="pricing-container">
-      <p class="styled-header styled white">That's crazy.<br><br>So how much does it cost?</p>
+      <p id="cost-question" class="styled-header styled white">That's crazy.<br><br>So how much does it cost?</p>
       <img id="faux-pricing" src="./img/faux_pricing.png">
     </div>
   </div>
@@ -64,7 +70,7 @@
     <div id="signup-box">
       <p id="signup-box-header" class="white styled">We'll email you next steps.</p>
       <input id="email-input" type="email" placeholder="Enter work email">
-      <button id="signup-button" class="styled-button">GET EARLY ACCESS</button>
+      <button id="signup-button" class="styled-button">GET FIRST ACCESS</button>
     </div>
   </div>
   <div id="footer" class="white styled">Playtest</div>

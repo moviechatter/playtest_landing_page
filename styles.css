@@ -1,9 +1,43 @@
+#blackout {
+  width: 100%;
+  height: 100%;
+  opacity: 0%;
+  background-color: rgba(0,0,0, 0.8);
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s ease;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.blackout-item {
+  position: fixed;
+}
+
+.blackout-chest-component {
+  position: fixed;
+  width: 0%;
+  transition: transform 0.3s ease, width 0.3s ease, bottom 0.3s ease, left 0.3s ease;
+}
+
+#blackout-chest {
+  background-repeat: no-repeat;
+  width: 30%;
+  left: 35%;
+  top: 40%;
+}
+
 .plain {
-  font-family: Raleway;
+  font-family: "Raleway";
 }
 
 .styled {
-  font-family: Roboto Mono;
+  font-family: "Roboto Mono";
+}
+
+.videogame {
+  font-family: "Press Start 2P";
+  color: #7B3E11;
 }
 
 .italic {
@@ -149,6 +183,7 @@ body {
 }
 
 #contact-email {
+  padding-top: 3vh;
   float: right;
 }
 
@@ -203,6 +238,11 @@ body {
   text-align: center;
   font-size: 2em;
   padding-left: 8vw;
+}
+
+#nathan-section {
+  display: flex;
+  flex-direction: column;
 }
 
 #nathan-article-container {
@@ -280,6 +320,10 @@ body {
 #pricing-container {
   width: 40%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #faux-pricing {
@@ -358,4 +402,123 @@ body {
   font-weight: bold;
   padding-top: 1vh;
   padding-bottom: 1vh;
+}
+
+/* Scrolls section */
+#demo-container {
+  border-radius: 30px;
+  width: 86%;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#url-bar {
+  background-color: #141134;
+  height: 5vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 2vh 0vw;
+}
+
+#url-controls {
+  width: 10%;
+  height: auto;
+  padding: 0vh 2vw;
+}
+
+#url-field {
+  width: 80%;
+  height: auto;
+  padding: 0vh 1vw;
+}
+
+iframe {
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  height: 80vh;
+}
+
+#minigame-container {
+  display: flex;
+  flex-direction: column-reverse;
+  position: absolute;
+  overflow-y: hidden;
+  height: 80%;
+  width: 20%;
+  max-width: 20%;
+  bottom: 2vh;
+  right: 2vw;
+}
+
+#pointer {
+  width: 30%;
+  right: -12vw;
+  position: relative;
+  transition: opacity 0.3s ease;
+}
+
+#scroll-contents {
+  position: relative;
+  width: 100%;
+  height: 0vw;
+  transition: height 0.7s ease;
+  overflow-y: hidden;
+  padding-top: 30%;
+}
+
+#scroll-top-half {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  transition: transform 0.7s ease;
+}
+
+#scroll-bottom-half {
+  width: 100%;
+  position: relative;
+}
+
+#scav-instructions {
+  font-size: 1.4vw;
+}
+
+.scav-hunt-item {
+  position: relative;
+  opacity: 0%;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  max-width: 80%;
+  padding: 0vh 22%;
+  align-items: center;
+}
+
+.finished-scav-item {
+  opacity: 100%;
+}
+
+.scav-hunt-text {
+  flex: 1;
+  overflow-wrap: break-word;
+  font-size: 0.9vw;
+  white-space: normal;
+  margin: 6% 1%;
+}
+
+.scav-checkbox {
+  max-width: 100%;
+  width: 20%;
+  height: auto;
+  margin-left: 2%;
+}
+
+#timed-text {
+  color: white;
 }
