@@ -9,6 +9,7 @@ document.addEventListener("click", (event) => {
   const clickedElement = event.target;
   console.log(clickedElement);
 });
+let won = false;
 
 const copy_button = document.getElementById('script-copier');
 const hero_container = document.getElementById('hero');
@@ -230,12 +231,13 @@ urlBar.appendChild(urlField);
 // Remember to remove all iframe event listeners for click & mouseover, and also stop all link elements
 const iframe = document.createElement("iframe");
 iframe.src = "./beast_store.html";
+iframe.id = "iframe";
 iframe.addEventListener("load", () => {
   const iframeDocument = iframe.contentDocument;
   iframeDocument.addEventListener("click", (event) => {
     const clickedElement = event.target;
     console.log(clickedElement);
-    if (Object.values(scav_item_checks).every(value => value === true)) {
+    if (Object.values(scav_item_checks).every(value => value === true) && won == false) {
       victorySequence();
     }
   });
@@ -251,6 +253,13 @@ iframe.addEventListener("load", () => {
         check.src = "./img/hidden_elements/checked.png";
         console.log("purple clicked");
         scav_item_checks.purple = true;
+        const highlight = document.createElement("img");
+        highlight.src = `./img/Highlights/purple-1.png`;
+        highlight.id = `purple-1-highlight`;
+        highlight.style.position = "absolute";
+        highlight.style.zIndex = "12";
+        highlight.style.top = "5%";
+        iframeDocument.getElementById("purple-1").parentElement.appendChild(highlight);
       });
     } else {
       link.addEventListener("click", (event) => {
@@ -262,13 +271,62 @@ iframe.addEventListener("load", () => {
   let classes = ["purple", "round", "curly", "sound"];
   for (let i = 0; i < classes.length; i++) {
     iframeDocument.querySelectorAll(`.${classes[i]}`).forEach((element) => {
-      console.log(element);
       element.addEventListener("click", () => {
         let item = document.getElementById(`scav-item-${i+1}`);
         item.style.opacity = "100%";
         let check = document.getElementById(`scav-check-${i+1}`);
         check.src = "./img/hidden_elements/checked.png";
-        scav_item_checks[classes[i]] = true;
+        console.log("element click logged")
+        
+        if (scav_item_checks[classes[i]] == false) {
+          scav_item_checks[classes[i]] = true;
+          const highlight = document.createElement("img");
+          highlight.src = `./img/Highlights/${element.id}.png`;
+          highlight.id = `${element.id}-highlight`;
+          highlight.style.position = "absolute";
+          highlight.style.zIndex = "12";
+          if (element.id == "curly-1") {
+            highlight.style.bottom = "65%";
+            highlight.style.left = "37.1%";
+            highlight.style.width = "33%";
+          } else if (element.id == "curly-2") {
+            highlight.style.top = "1%";
+            highlight.style.left = "41%";
+            highlight.style.width = "33%";
+          } else if (element.id == "round-1") {
+            highlight.style.width = "43%";
+            highlight.style.left = "54%";
+            highlight.style.top = "4%";
+          } else if (element.id == "round-2") {
+            highlight.style.width = "73%";
+            highlight.style.left = "16%";
+            highlight.style.top = "24%";
+          } else if (element.id == "round-3") {
+            highlight.style.width = "43%";
+            highlight.style.left = "29%";
+            highlight.style.top = "-7%";
+          } else if (element.id == "purple-2") {
+            // adjust
+            highlight.style.width = "43%";
+            highlight.style.left = "54%";
+            highlight.style.top = "4%";
+          } else if (element.classList.contains("sound")) {
+            // adjust
+            highlight.style.width = "1.5%";
+            highlight.style.left = "9.7%";
+            highlight.style.top = "-4%";
+            highlight.src = `./img/Highlights/sound.png`;
+            highlight.id = `sound-highlight`;
+          }
+          if (element.id == "round-3" || element.id == "purple-2") {
+            element.parentElement.appendChild(highlight);
+          } else if (element.classList.contains("sound")) {
+            const divToAddTo = iframeDocument.getElementById("sound-4");
+            divToAddTo.appendChild(highlight);
+          } else {
+            element.appendChild(highlight);
+          }
+        }
       });
     });
   }
@@ -422,6 +480,8 @@ const hiddenButton = document.getElementById("hidden-link");
 hiddenButton.addEventListener('click', blackout);
 
 function victorySequence() {
+  const iframeDocument = iframe.contentDocument;
+  won = true;
   console.log("victory sequence");
   clearInterval(timerInterval);
   const timedText = document.getElementById("timed-text");
@@ -430,6 +490,21 @@ function victorySequence() {
   const modifiedText = words.join(" ");
   timedText.textContent = modifiedText;
   nathanSection.scrollIntoView({ behavior: 'smooth' });
+
+  const iframeBlackout = document.createElement("div");
+  iframeBlackout.id = "iframe-blackout";
+  iframeBlackout.style.width = "100%";
+  iframeBlackout.style.height = "100%";
+  iframeBlackout.style.opacity = "0%";
+  iframeBlackout.style.backgroundColor = "rgba(0,0,0,0.8)";
+  iframeBlackout.style.top = "0";
+  iframeBlackout.style.left = "0";
+  iframeBlackout.style.transition = "opacity 0.5s ease";
+  iframeBlackout.style.zIndex = "11";
+  iframeBlackout.style.pointerEvents = "none";
+  iframeBlackout.style.position = "fixed";
+  iframeBlackout.style.opacity = "100%";
+  iframeDocument.body.appendChild(iframeBlackout);
 }
 
 // Select all anchor links with the class "smooth-scroll"
