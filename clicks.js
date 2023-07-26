@@ -480,7 +480,6 @@ const hiddenButton = document.getElementById("hidden-link");
 hiddenButton.addEventListener('click', blackout);
 
 function victorySequence() {
-  const iframeDocument = iframe.contentDocument;
   won = true;
   console.log("victory sequence");
   clearInterval(timerInterval);
@@ -493,18 +492,9 @@ function victorySequence() {
 
   const iframeBlackout = document.createElement("div");
   iframeBlackout.id = "iframe-blackout";
-  iframeBlackout.style.width = "100%";
-  iframeBlackout.style.height = "100%";
-  iframeBlackout.style.opacity = "0%";
-  iframeBlackout.style.backgroundColor = "rgba(0,0,0,0.8)";
-  iframeBlackout.style.top = "0";
-  iframeBlackout.style.left = "0";
-  iframeBlackout.style.transition = "opacity 0.5s ease";
-  iframeBlackout.style.zIndex = "11";
-  iframeBlackout.style.pointerEvents = "none";
-  iframeBlackout.style.position = "fixed";
+  iframeBlackout.classList.add("blackout");
+  demoContainer.appendChild(iframeBlackout);
   iframeBlackout.style.opacity = "100%";
-  iframeDocument.body.appendChild(iframeBlackout);
 }
 
 // Select all anchor links with the class "smooth-scroll"
