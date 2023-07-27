@@ -4,12 +4,25 @@ let scav_item_checks = {
   "curly": false,
   "sound": false
 }
+let clicked_elements = {
+  "purple": "",
+  "round": "",
+  "curly": "",
+  "sound": ""
+}
+let timer = 0.0;
 let timerInterval;
 document.addEventListener("click", (event) => {
   const clickedElement = event.target;
   console.log(clickedElement);
 });
 let won = false;
+let sidebar_open = false;
+let iframeBlackout;
+let descriptionText;
+let iframeDocument;
+let pointRow;
+let pointText;
 
 const copy_button = document.getElementById('script-copier');
 const hero_container = document.getElementById('hero');
@@ -233,7 +246,7 @@ const iframe = document.createElement("iframe");
 iframe.src = "./beast_store.html";
 iframe.id = "iframe";
 iframe.addEventListener("load", () => {
-  const iframeDocument = iframe.contentDocument;
+  iframeDocument = iframe.contentDocument;
   iframeDocument.addEventListener("click", (event) => {
     const clickedElement = event.target;
     console.log(clickedElement);
@@ -254,8 +267,10 @@ iframe.addEventListener("load", () => {
         console.log("purple clicked");
         scav_item_checks.purple = true;
         const highlight = document.createElement("img");
+        highlight.style.transition = 'opacity 0.5s ease';
         highlight.src = `./img/Highlights/purple-1.png`;
         highlight.id = `purple-1-highlight`;
+        clicked_elements.purple = "purple-1";
         highlight.style.position = "absolute";
         highlight.style.zIndex = "12";
         highlight.style.top = "5%";
@@ -283,6 +298,8 @@ iframe.addEventListener("load", () => {
           const highlight = document.createElement("img");
           highlight.src = `./img/Highlights/${element.id}.png`;
           highlight.id = `${element.id}-highlight`;
+          highlight.style.transition = 'opacity 0.5s ease';
+          clicked_elements[classes[i]] = element.id;
           highlight.style.position = "absolute";
           highlight.style.zIndex = "12";
           if (element.id == "curly-1") {
@@ -344,7 +361,7 @@ pointer.id = "pointer";
 function handlePointerClick() {
   nathanSection.scrollIntoView({ behavior: 'smooth' });
   const timedText = document.createElement("p");
-  let timer = 0.0;
+  
   timedText.id = "timed-text";
   timedText.classList.add("videogame");
   timedText.textContent = `You've spent ${timer.toFixed(1)} seconds longer on mrbeast.store because of Playtest.`;
@@ -479,6 +496,42 @@ document.body.addEventListener('keydown', blackout);
 const hiddenButton = document.getElementById("hidden-link");
 hiddenButton.addEventListener('click', blackout);
 
+function countUpPoints(textElement) {
+  // edit duration to change length of animation
+  let duration = 3.6;
+  // Calculate the points that we will count up to
+  const basePoints = 1000; // Initial number of points when timer is 0.0
+  const k = 0.1; // A constant controlling the rate of decrease in points
+  const totalPoints = basePoints / (1 + k * timer);
+
+  const startTime = performance.now();
+  const interval = 16; // 60 FPS (1000ms / 60 frames)
+  
+  function exponentialEaseOut(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+  
+  function updatePoints() {
+    const currentTime = performance.now();
+    const elapsedTime = currentTime - startTime;
+    
+    if (elapsedTime >= duration * 1000) {
+      textElement.textContent = Math.ceil(totalPoints);
+      concludePointsDisplay();
+      return;
+    }
+    
+    const t = elapsedTime / (duration * 1000);
+    const easing = exponentialEaseOut(t);
+    const currentPoints = Math.ceil(totalPoints * easing);
+    textElement.textContent = currentPoints;
+    
+    setTimeout(updatePoints, interval);
+  }
+
+  updatePoints();
+}
+
 function victorySequence() {
   won = true;
   console.log("victory sequence");
@@ -490,11 +543,103 @@ function victorySequence() {
   timedText.textContent = modifiedText;
   nathanSection.scrollIntoView({ behavior: 'smooth' });
 
-  const iframeBlackout = document.createElement("div");
+  iframeBlackout = document.createElement("div");
   iframeBlackout.id = "iframe-blackout";
   iframeBlackout.classList.add("blackout");
   demoContainer.appendChild(iframeBlackout);
   iframeBlackout.style.opacity = "100%";
+
+  // point counter has two elements it contains, p & div elements
+  const pointCounter = document.createElement("div");
+  pointCounter.id = "point-counter";
+  // descriptor text
+  descriptionText = document.createElement("p");
+  descriptionText.id = "description-text";
+  descriptionText.classList.add("videogame");
+  descriptionText.textContent = ""
+  // point row & its two children, p & img elements
+  pointRow = document.createElement("div");
+  pointRow.id = "point-row";
+  pointText = document.createElement("p");
+  pointText.id = "point-text";
+  pointText.classList.add("videogame");
+  pointText.textContent = "0";
+  const pointImage = document.createElement("img");
+  pointImage.id = "point-image";
+  pointImage.src = "./img/hidden_elements/point_icon.png";
+  // add elements to pointRow
+  pointRow.appendChild(pointText);
+  pointRow.appendChild(pointImage);
+  // add description and point row to pointCounter
+  pointCounter.appendChild(descriptionText);
+  pointCounter.appendChild(pointRow);
+  // add pointCounter to iframeBlackout
+  iframeBlackout.appendChild(pointCounter);
+  removeTypewriter("You earned some points! Keep playing to win prizes.", descriptionText);
+  countUpPoints(pointText);
+}
+
+const sidebarPointDiv = document.createElement('div');
+
+function concludePointsDisplay() {
+  // consider creating the sidebar element with Auth0 sign-up prior to this section and have it already added to the demoContainer, and then
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.8 },
+    zIndex: 14,
+  });
+  setTimeout(() => {
+    removeTypewriter("", descriptionText);
+
+    setTimeout(() => {
+      // fade out and remove point celeb elements
+      iframeBlackout.style.opacity = "0%";
+      minigameContainer.style.opacity = "0%";
+      Object.values(clicked_elements).forEach((value) => {
+        let toFadeAndRemove = iframeDocument.getElementById(`${value}`);
+        toFadeAndRemove.style.opacity = "0%";
+        setTimeout(() => {
+          toFadeAndRemove.remove();
+        }, 800);
+      });
+
+      // once removed, add in new div to contain point indicator
+      setTimeout(() => {
+        minigameContainer.remove();
+        iframeBlackout.remove();
+
+        // consider making these CSS properties a class of div that just gets added later .sidebar-point-row
+        pointRow.classList.add("sidebar-point-row");
+        pointText.classList.add("sidebar-point-text");
+        // ask chatgpt to adjust these later for you
+        pointRow.style.right = "2vw"; // do these need to be % instead?
+        pointRow.style.bottom = "1vw";
+        pointRow.style.backgroundColor = "#ffffff";
+        pointRow.style.borderRadius = "10px";
+        pointRow.style.padding = "1vw";
+        pointRow.style.width = "20%";
+
+        demoContainer.appendChild(pointRow);
+        demoContainer.appendChild(sidebarPointDiv);
+        pointRow.addEventListener('click', () => {
+          toggleSidebar();
+        });
+      }, 800);
+    }, 500);
+  }, 1000);
+
+  // add a click listener to pointCounter div that calls toggleSidebar()
+  // make pointCounter div have a sparkle animation overlaid on it to show clickability
+  // remove sparkle on click if it is still there (removes on first click and keeps removed)
+}
+
+function toggleSidebar() {
+  // if (sidebar_open == true) {
+  //   close sidebar code
+  // } else {
+    // open sidebar code
+  // }
 }
 
 // Select all anchor links with the class "smooth-scroll"
