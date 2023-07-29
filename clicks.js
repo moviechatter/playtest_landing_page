@@ -23,6 +23,7 @@ let descriptionText;
 let iframeDocument;
 let pointRow;
 let pointText;
+let pointImage;
 
 const copy_button = document.getElementById('script-copier');
 const hero_container = document.getElementById('hero');
@@ -564,7 +565,7 @@ function victorySequence() {
   pointText.id = "point-text";
   pointText.classList.add("videogame");
   pointText.textContent = "0";
-  const pointImage = document.createElement("img");
+  pointImage = document.createElement("img");
   pointImage.id = "point-image";
   pointImage.src = "./img/hidden_elements/point_icon.png";
   // add elements to pointRow
@@ -579,7 +580,141 @@ function victorySequence() {
   countUpPoints(pointText);
 }
 
+// Sidebar structure
 const sidebarPointDiv = document.createElement('div');
+sidebarPointDiv.id = "sidebar-point-div";
+sidebarPointDiv.classList.add("untoggled");
+const sidebarHeader = document.createElement('p');
+sidebarHeader.id = "sidebar-header";
+sidebarHeader.classList.add("styled");
+sidebarHeader.textContent = "Playtest";
+const sidebarCloseButton = document.createElement('button');
+sidebarCloseButton.id = "sidebar-close-button";
+sidebarCloseButton.classList.add("close-button");
+sidebarCloseButton.textContent = "X";
+sidebarCloseButton.addEventListener('click', () => {
+  toggleSidebar();
+});
+const sidebarHeroImg = document.createElement('img');
+sidebarHeroImg.id = "sidebar-hero-img";
+sidebarHeroImg.src = "./img/sidebar/hero_prize_banner.png";
+const sidebarTabsDiv = document.createElement('div');
+sidebarTabsDiv.id = "sidebar-tabs-div";
+const prizesTabButton = document.createElement('button');
+prizesTabButton.classList.add("sidebar-tab-button");
+prizesTabButton.classList.add("toggled");
+prizesTabButton.textContent = "Prizes";
+prizesTabButton.addEventListener('click', () => {
+  prizesTabButton.classList.remove("untoggled");
+  prizesTabButton.classList.add("toggled");
+  rankingsTabButton.classList.remove("toggled");
+  rankingsTabButton.classList.add("untoggled");
+  prizesTab.classList.remove("untoggled");
+  prizesTab.classList.add("toggled");
+  rankingsTab.classList.remove("toggled");
+  rankingsTab.classList.add("untoggled");
+});
+const rankingsTabButton = document.createElement('button');
+rankingsTabButton.classList.add("sidebar-tab-button");
+rankingsTabButton.classList.add("untoggled");
+rankingsTabButton.textContent = "Rankings";
+rankingsTabButton.addEventListener('click', () => {
+  rankingsTabButton.classList.remove("untoggled");
+  rankingsTabButton.classList.add("toggled");
+  prizesTabButton.classList.remove("toggled");
+  prizesTabButton.classList.add("untoggled");
+  rankingsTab.classList.remove("untoggled");
+  rankingsTab.classList.add("toggled");
+  prizesTab.classList.remove("toggled");
+  prizesTab.classList.add("untoggled");
+});
+sidebarTabsDiv.appendChild(prizesTabButton);
+sidebarTabsDiv.appendChild(rankingsTabButton);
+
+// Building the prize tab
+const prizesTab = document.createElement('div');
+prizesTab.id = "prizes-tab";
+prizesTab.classList.add("sidebar-tab");
+prizesTab.classList.add("toggled");
+// Building the prize tab components
+const prizeHeader = document.createElement('p');
+prizeHeader.id = "prize-header";
+prizeHeader.classList.add("plain");
+prizeHeader.textContent = "The best part of any game: the Loot.";
+const prizeHeroContainer = document.createElement('div');
+prizeHeroContainer.id = "prize-hero-container";
+const prizeHeroImg = document.createElement('img');
+prizeHeroImg.id = "prize-hero-img";
+prizeHeroImg.src = "./img/sidebar/prize_hero.png";
+prizeHeroContainer.appendChild(prizeHeroImg);
+const prizeFooter = document.createElement('p');
+prizeFooter.id = "prize-footer";
+prizeFooter.classList.add("styled");
+prizeFooter.textContent = "The Loot!";
+const signupCTAText = document.createElement('p');
+signupCTAText.id = "signup-cta-text";
+signupCTAText.classList.add("videogame");
+signupCTAText.textContent = "Sign up to turn your points into prizes:";
+prizesTab.appendChild(prizeHeader);
+prizesTab.appendChild(prizeHeroContainer);
+// prizesTab.appendChild(prizeFooter);
+prizesTab.appendChild(signupCTAText);
+
+
+// Building the ranking tab
+const rankingsTab = document.createElement('div');
+rankingsTab.id = "rankings-tab";
+rankingsTab.classList.add("sidebar-tab");
+rankingsTab.classList.add("untoggled");
+// Building the ranking tab components
+const rankingCategoriesDiv = document.createElement('div');
+rankingCategoriesDiv.id = "ranking-categories-div";
+rankingCategoriesDiv.classList.add("ranking-container-element");
+let rankTexts = ["Rank", "Username", "Points"];
+// loop over rankTexts and create p tags and append as children into rankingCategoriesDiv
+for (let i = 0; i < rankTexts.length; i++) {
+  const text = document.createElement('p');
+  if (i == 0) {
+    text.style.width = "14%";
+  } else if (i == 1) {
+    text.style.width = "32%";
+  } else {
+    text.style.width = "34%";
+  }
+  text.classList.add("plain");
+  text.classList.add("ranking-category-text");
+  text.textContent = rankTexts[i];
+  rankingCategoriesDiv.appendChild(text);
+}
+// Call Firebase, format into class .placement-row
+// .username and .points can be applied to the p tags for the individual elements
+const placementsDiv = document.createElement('div');
+placementsDiv.id = "placements-div";
+
+const moreRanksButton = document.createElement('button');
+moreRanksButton.id = "more-ranks-button";
+moreRanksButton.classList.add("ranking-container-element");
+moreRanksButton.textContent = "more...";
+rankingsTab.appendChild(rankingCategoriesDiv);
+rankingsTab.appendChild(placementsDiv);
+rankingsTab.appendChild(moreRanksButton)
+
+
+// CTA button
+const sidebarSignupButton = document.createElement('button');
+sidebarSignupButton.id = "sidebar-signup-button";
+sidebarSignupButton.classList.add("styled-button");
+sidebarSignupButton.textContent = "Sign up";
+
+// Adding things together to form the sidebar point div
+sidebarPointDiv.appendChild(sidebarHeader);
+sidebarPointDiv.appendChild(sidebarCloseButton);
+sidebarPointDiv.appendChild(sidebarHeroImg);
+sidebarPointDiv.appendChild(sidebarTabsDiv);
+sidebarPointDiv.appendChild(prizesTab);
+sidebarPointDiv.appendChild(rankingsTab);
+sidebarPointDiv.appendChild(sidebarSignupButton);
+demoContainer.appendChild(sidebarPointDiv);
 
 function concludePointsDisplay() {
   // consider creating the sidebar element with Auth0 sign-up prior to this section and have it already added to the demoContainer, and then
@@ -596,12 +731,16 @@ function concludePointsDisplay() {
       // fade out and remove point celeb elements
       iframeBlackout.style.opacity = "0%";
       minigameContainer.style.opacity = "0%";
+      console.log(clicked_elements);
       Object.values(clicked_elements).forEach((value) => {
-        let toFadeAndRemove = iframeDocument.getElementById(`${value}`);
+        let toFadeAndRemove = iframeDocument.getElementById(`${value}-highlight`);
+        if (value.includes("sound")) {
+          toFadeAndRemove = iframeDocument.getElementById(`sound-highlight`);
+        }
         toFadeAndRemove.style.opacity = "0%";
         setTimeout(() => {
           toFadeAndRemove.remove();
-        }, 800);
+        }, 1400);
       });
 
       // once removed, add in new div to contain point indicator
@@ -611,22 +750,41 @@ function concludePointsDisplay() {
 
         // consider making these CSS properties a class of div that just gets added later .sidebar-point-row
         pointRow.classList.add("sidebar-point-row");
+        pointRow.style.width = "12vw";
+        pointRow.style.height = "7vw";
+        pointRow.style.opacity = "0%";
+        pointRow.style.padding = "0";
         pointText.classList.add("sidebar-point-text");
-        // ask chatgpt to adjust these later for you
-        pointRow.style.right = "2vw"; // do these need to be % instead?
-        pointRow.style.bottom = "1vw";
-        pointRow.style.backgroundColor = "#ffffff";
-        pointRow.style.borderRadius = "10px";
-        pointRow.style.padding = "1vw";
-        pointRow.style.width = "20%";
+        pointText.style.color = "black";
+        pointText.style.fontSize = "2vw";
+        pointText.style.marginTop = "0";
+        pointText.style.marginBottom = "0";
+        pointText.style.marginRight = "0.4vw";
+        pointImage.classList.add("sidebar-point-image");
+        pointImage.style.width = "2.9vw";
+        pointImage.style.transform = "translateY(-8%)";
 
         demoContainer.appendChild(pointRow);
-        demoContainer.appendChild(sidebarPointDiv);
+        const miniPointRow = pointRow.cloneNode(true);
+        miniPointRow.id = "mini-sidebar-point-row";
+        miniPointRow.style.opacity = "1.0";
+        // change ID of the p tag and img tag inside of miniPointRow
+        let miniPointText = miniPointRow.children[0];
+        miniPointText.id = "mini-sidebar-point-text";
+        miniPointText.style.fontSize = "0.8vw";
+        miniPointText.style.marginRight = "0.2vw";
+        let miniPointImg = miniPointRow.children[1];
+        miniPointImg.id = "mini-sidebar-point-img";
+        miniPointImg.style.width = "1.4vw";
+        miniPointImg.style.height = "1.4vw";
+        miniPointImg.style.transform = "translateY(-28%)";
+        sidebarPointDiv.appendChild(miniPointRow);
+        pointRow.style.opacity = "100%";
         pointRow.addEventListener('click', () => {
           toggleSidebar();
         });
-      }, 800);
-    }, 500);
+      }, 1000);
+    }, 1400);
   }, 1000);
 
   // add a click listener to pointCounter div that calls toggleSidebar()
@@ -635,11 +793,15 @@ function concludePointsDisplay() {
 }
 
 function toggleSidebar() {
-  // if (sidebar_open == true) {
-  //   close sidebar code
-  // } else {
-    // open sidebar code
-  // }
+  if (sidebar_open == true) {
+    sidebar_open = false;
+    sidebarPointDiv.classList.remove("toggled");
+    sidebarPointDiv.classList.add("untoggled");
+  } else {
+    sidebar_open = true;
+    sidebarPointDiv.classList.remove("untoggled");
+    sidebarPointDiv.classList.add("toggled");
+  }
 }
 
 // Select all anchor links with the class "smooth-scroll"
