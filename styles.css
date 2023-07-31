@@ -9,6 +9,8 @@
   background-color: rgba(0,0,0, 0.8);
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   transition: opacity 0.5s ease;
   z-index: 11;
   pointer-events: none;
@@ -82,10 +84,9 @@
 }
 
 .break-container {
-  width: 110%;
+  width: 100%;
   background-color: #141134;
-  padding-top: 8vh;
-  padding-bottom: 8vh;
+  padding: 8vh 0vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -179,13 +180,18 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0;
+  margin: 0;
+  margin-top: 2vh;
   overflow-x: hidden;
 }
 
 #header {
   height: 100px;
-  width: 96%;
+  width: 98%;
+}
+
+#playtest-header-text {
+  padding-left: 1.2vh;
 }
 
 #header-right-elements {
@@ -219,7 +225,7 @@ body {
 }
 
 #hero {
-  width: 92%;
+  width: 96%;
   height: 68vh;
   background-color: #141134;
   border-radius: 10px;
@@ -307,7 +313,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 110%;
+  width: 100%;
 }
 
 #step-container {
@@ -366,7 +372,7 @@ body {
   z-index: 1;
   background-color: white;
   transform: translateY(-4vh);
-  width: 130%;
+  width: 100%;
 }
 
 #lol {
@@ -426,13 +432,17 @@ body {
 
 #footer {
   background-color: #141134;
-  width: 110%;
+  width: 100%;
   text-align: right;
-  padding-right: 12vw;
   font-size: 1.2em;
   font-weight: bold;
   padding-top: 1vh;
   padding-bottom: 1vh;
+}
+
+#footer-text {
+  padding-right: 1.2vh;
+  margin: 0.4vw 0;
 }
 
 /* Scrolls section */
