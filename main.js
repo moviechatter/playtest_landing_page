@@ -776,6 +776,11 @@ function concludePointsDisplay() {
 }
 
 submitButton.addEventListener('click', function(event) {
+  submitButton.disabled = true;
+  // I want my button to have a cursor that indicates it's not clickable while loading and for the button background color to be slightly lighter while loading
+  submitButton.style.backgroundColor = "#504A8F";
+  submitButton.style.cursor = "not-allowed";
+  submitButton.style.textContent = "Loading...";
   const guessedLetters = Array.from(guessRow.childNodes);
   const guessedWord = guessedLetters.map(letter => letter.textContent).join('');
   const sanitizedWord = guessedWord.replace(/\d+/g, '').toLowerCase();
@@ -1044,6 +1049,10 @@ submitButton.addEventListener('click', function(event) {
       console.log("not valid word");
       woodAlertText.style.color = "red";
       woodAlertText.textContent = "Not a valid word! Re-submit";
+      // I want to change the button cursor back to clickable and for the button background color to change back to normal
+      submitButton.style.backgroundColor = "#141134";
+      submitButton.style.cursor = "pointer";
+      submitButton.disabled = false;
     }
   });
 });
