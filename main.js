@@ -18,7 +18,7 @@ let woodAlertText = document.createElement('p');
 woodAlertText.id = "wood-alert-text";
 woodAlertText.textContent = "Add up to 7 tiles to your tray!";
 woodAlertText.style.width = "80%";
-woodAlertText.style.color = "white";
+woodAlertText.style.color = "brown";
 woodAlertText.style.fontSize = "0.8vw";
 // woodAlertText.style.padding = "0.2vw 2vw";
 woodAlertText.classList.add("videogame");
@@ -599,12 +599,12 @@ scrabbleElements.forEach(element => {
 
   // If a tile is clicked before 7 tiles have been reached, shade it
   element.addEventListener("click", function(event) {
-    if (clicks >= 3) {
+    if (clicks >= 4) {
       woodAlertText.textContent = `Click on tiles in your tray to add them to your guess!`;
-      woodAlertText.style.color = "white";
+      woodAlertText.style.color = "brown";
     } else if (clicks >= 1) {
       woodAlertText.textContent = `Submit a word related to this site for bonus points!`;
-      woodAlertText.style.color = "white";
+      woodAlertText.style.color = "brown";
     }
     if (started == false) {
       started = true;
