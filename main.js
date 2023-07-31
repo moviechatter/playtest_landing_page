@@ -780,7 +780,7 @@ submitButton.addEventListener('click', function(event) {
   // I want my button to have a cursor that indicates it's not clickable while loading and for the button background color to be slightly lighter while loading
   submitButton.style.backgroundColor = "#504A8F";
   submitButton.style.cursor = "not-allowed";
-  submitButton.style.textContent = "Loading...";
+  submitButton.textContent = "Loading...";
   const guessedLetters = Array.from(guessRow.childNodes);
   const guessedWord = guessedLetters.map(letter => letter.textContent).join('');
   const sanitizedWord = guessedWord.replace(/\d+/g, '').toLowerCase();
@@ -1052,6 +1052,7 @@ submitButton.addEventListener('click', function(event) {
       // I want to change the button cursor back to clickable and for the button background color to change back to normal
       submitButton.style.backgroundColor = "#141134";
       submitButton.style.cursor = "pointer";
+      submitButton.textContent = "Try Again";
       submitButton.disabled = false;
     }
   });
