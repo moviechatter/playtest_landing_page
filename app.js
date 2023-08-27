@@ -3,7 +3,7 @@ const app = express();
 
 // Define route for the main app
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/index.html'));
+  res.sendFile(path.join(__dirname, './index.html'));
 });
 
 // Define route for the /demo path
