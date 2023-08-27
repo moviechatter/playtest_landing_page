@@ -2,7 +2,6 @@
   "name": "playtest_landing_page",
   "version": "1.0.0",
   "description": "",
-  "main": "router.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
