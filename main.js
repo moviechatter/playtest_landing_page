@@ -574,13 +574,19 @@ scrabbleElements.forEach(element => {
   let currentFontSize = window.getComputedStyle(element).fontSize;
 
   // styles for tiles
-  element.style.color = "#5c4428"; // alex added this to remind to make letters a color too!
+  element.style.color = "#5c4428";
+  // element.style.color = "#141134";
   element.style.borderStyle = "solid";
   element.style.borderTop = "2px solid #e2c19b";
   element.style.borderLeft = "2px solid #e2c19b";
   element.style.borderBottom = "2px solid #998369";
-  element.style.borderRight = "2px solid #998369";
+  // element.style.borderRight = "2px solid #998369";
+  // element.style.borderTop = "2px solid #141134";
+  // element.style.borderLeft = "2px solid #141134";
+  // element.style.borderBottom = "2px solid #141134";
+  // element.style.borderRight = "2px solid #141134";
   element.style.backgroundColor = "tan";
+  // element.style.backgroundColor = "white";
   element.style.position = "relative";
   element.style.width = currentFontSize;
   element.style.height = currentFontSize;
@@ -599,6 +605,7 @@ scrabbleElements.forEach(element => {
 
   // If a tile is clicked before 7 tiles have been reached, shade it
   element.addEventListener("click", function(event) {
+    element.style.cursor = "not-allowed";
     if (clicks >= 4) {
       woodAlertText.textContent = `Click on tiles in your tray to add them to your guess!`;
       woodAlertText.style.color = "brown";
@@ -668,10 +675,10 @@ scrabbleElements.forEach(element => {
 
       this.style.backgroundColor = '#b39265';
       this.style.color = '#000000'
-      this.style.cursor = "not-allowed";
       inventoryRow.appendChild(inventoryLetter);
     }
-
+    element.disabled = true;
+    element.style.cursor = "not-allowed";
     clicks++;
     if (clicks >= 7) {
       inventoryFilled = true;

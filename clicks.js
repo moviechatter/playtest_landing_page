@@ -1,3 +1,18 @@
+const express = require('express');
+const app = express();
+
+// Redirect subdomain to a different site
+app.get('/', (req, res) => {
+  if (req.subdomains.includes('demo')) {
+    return res.redirect('https://loom.com/share/e2ff37da4f2d421386044965dd9fbeb1');
+  }
+  if (req.subdomains.includes('deck')) {
+    return res.redirect('https://loom.com/share/e2ff37da4f2d421386044965dd9fbeb1');
+  }
+});
+
+app.listen(process.env.PORT || 3000);
+
 let scav_item_checks = {
   "purple": false,
   "round": false,
@@ -98,13 +113,13 @@ let count = 1;
 function handleStepButtonClick() {
   count++;
   console.log(count);
-  step_image.src = `./img/step_${count}.png`;
+  step_image.src = `./img/hidden_elements/hidden_step_${count}.png`;
   step_number.src = `./img/${count}.png`;
   if (count == 2) {
-    step_content.textContent = "We use those attributes and free space to generate beautiful ads that integrate right into your content.";
+    step_content.textContent = "We use those attributes to make games your users keep coming back to play, integrated right into your content.";
     step_button.textContent = "AND THEN??";
   } else if (count >= 3) {
-    step_content.textContent = "You get non-disruptive ads, brands get eyeballs, & Playtest sits in the middle taking a small cut. Everybody wins.";
+    step_content.textContent = "You get returning user traffic, your users get fun ways to engage with your content, and Playtest gets revenue to keep making more cool games. Everybody wins.";
     step_button.removeEventListener('click', handleStepButtonClick);
     step_button.addEventListener('click', scrollToPricingSection);
     step_button.textContent = "SIGN ME UP!!";
