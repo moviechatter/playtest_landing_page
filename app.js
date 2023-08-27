@@ -1,11 +1,9 @@
 const express = require('express');
 const app = express();
+const mainApp = require('./loader.js');
 
 // Define route for the main app
-app.get('/', (req, res) => {
-  // Your main app logic
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+app.use('/', mainApp);
 
 // Define route for the /demo path
 app.get('/demo', (req, res) => {
