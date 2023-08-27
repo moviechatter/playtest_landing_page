@@ -4,7 +4,7 @@ const app = express();
 // Define route for the main app
 app.get('/', (req, res) => {
   // Your main app logic
-  res.send('Main App');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Define route for the /demo path
