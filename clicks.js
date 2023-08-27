@@ -1,18 +1,3 @@
-const express = require('express');
-const app = express();
-
-// Redirect subdomain to a different site
-app.get('/', (req, res) => {
-  if (req.subdomains.includes('demo')) {
-    return res.redirect('https://loom.com/share/e2ff37da4f2d421386044965dd9fbeb1');
-  }
-  if (req.subdomains.includes('deck')) {
-    return res.redirect('https://loom.com/share/e2ff37da4f2d421386044965dd9fbeb1');
-  }
-});
-
-app.listen(process.env.PORT || 3000);
-
 let scav_item_checks = {
   "purple": false,
   "round": false,
